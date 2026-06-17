@@ -1,28 +1,29 @@
 <?php
-// TiketVelvet.php
 require_once 'Tiket.php';
 
 class TiketVelvet extends Tiket {
-    // Properti tambahan spesifik
+    // Properti tambahan khusus TiketVelvet
     private $bantalSelimutPack;
     private $layananButler;
 
+    // Constructor untuk menginisialisasi properti induk dan anak
     public function __construct($id_tiket, $nama_film, $jadwal_tayang, $jumlah_kursi, $hargaDasarTiket, $bantalSelimutPack, $layananButler) {
-        parent::__construct($id_tiket, $nama_film, $jadwal_tayang, $jumlah_kursi, $hargaDasarTiket);
+        $this->id_tiket = $id_tiket;
+        $this->nama_film = $nama_film;
+        $this->jadwal_tayang = $jadwal_tayang;
+        $this->jumlah_kursi = $jumlah_kursi;
+        $this->hargaDasarTiket = $hargaDasarTiket;
         $this->bantalSelimutPack = $bantalSelimutPack;
         $this->layananButler = $layananButler;
     }
 
-    // Implementasi metode abstrak hitungTotalHarga()
+    // Implementasi abstract method dari class induk
     public function hitungTotalHarga() {
-        // Contoh kalkulasi: Kelas premium Velvet (misal ada tambahan Rp 30.000 per kursi)
-        $biayaPremium = 30000;
-        return ($this->hargaDasarTiket + $biayaPremium) * $this->jumlah_kursi;
+        return $this->hargaDasarTiket * $this->jumlah_kursi;
     }
 
-    // Implementasi metode abstrak tampilkanInfoFasilitas()
     public function tampilkanInfoFasilitas() {
-        return "Fasilitas Studio Velvet -> Paket Bantal/Selimut: " . ($this->bantalSelimutPack ?? '-') . ", Layanan Butler: " . ($this->layananButler ?? '-');
+        $statusBantal = $this->bantalSelimutPack ? "Termasuk Pack Bantal & Selimut" : "Tanpa Bantal & Selimut";
+        return "Fasilitas Velvet: " . $statusBantal . ", Layanan Butler: " . $this->layananButler;
     }
 }
-?>
